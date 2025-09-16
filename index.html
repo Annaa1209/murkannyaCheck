@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>З моменту останньої зустрічі минуло:</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --accent: #ff6b6b;
+    }
+    * {box-sizing: border-box;}
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Comfortaa', sans-serif;
+      background: linear-gradient(135deg, var(--bg), #1e293b);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .container {
+      text-align: center;
+      padding: 2rem;
+      max-width: 600px;
+    }
+    h1 {
+      font-size: clamp(24px, 5vw, 40px);
+      margin-bottom: 2rem;
+    }
+    #counter {
+      font-size: clamp(22px, 4vw, 36px);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    button, input[type="datetime-local"] {
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-family: inherit;
+    }
+    button {
+      cursor: pointer;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+    input[type="datetime-local"] {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+      cursor: pointer;
+    }
+    footer {
+      margin-top: 1rem;
+      font-size: 18px;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>З моменту останньої зустрічі минуло:</h1>
+    <div id="counter">0 днів 0 годин 0 секунд</div>
+
+    <div class="controls">
+      <button id="resetBtn">RESET</button>
+      <div>
+        <label for="manualDate">Встановити дату вручну:</label><br>
+        <input type="datetime-local" id="manualDate">
+        <button id="setDateBtn">Оновити</button>
+      </div>
+    </div>
+
+    <footer>ехх, як багато часу без муркання</footer>
+  </div>
+
+  <script>
+    // Default start time is now
+    let startTime = new Date();
+
+    const counterEl = document.getElementById('counter');
+    const resetBtn = document.getElementById('resetBtn');
+    const manualDateInput = document.getElementById('manualDate');
+    const setDateBtn = document.getElementById('setDateBtn');
+
+    function updateCounter() {
+      const now = new Date();
+      const diffMs = now - startTime;
+      if (diffMs < 0) {
+        counterEl.textContent = 'Дата у майбутньому!';
+        return;
+      }
+      const totalSeconds = Math.floor(diffMs / 1000);
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const seconds = totalSeconds % 60;
+      counterEl.textContent = `${days} днів ${hours} годин ${seconds} секунд`;
+    }
+
+    // Update every second
+    setInterval(updateCounter, 1000);
+    updateCounter();
+
+    // Reset button
+    resetBtn.addEventListener('click', () => {
+      startTime = new Date();
+      updateCounter();
+    });
+
+    // Manual date set
+    setDateBtn.addEventListener('click', () => {
+      const val = manualDateInput.value;
+      if (!val) return alert('Оберіть дату та час');
+      const chosenDate = new Date(val);
+      if (isNaN(chosenDate.getTime())) {
+        alert('Невірний формат дати');
+        return;
+      }
+      startTime = chosenDate;
+      updateCounter();
+    });
+  </script>
+</body>
+</html>
