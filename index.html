@@ -78,18 +78,20 @@
 <body>
   <div class="container">
     <h1>З моменту останньої зустрічі минуло:</h1>
-    <div id="counter">0 днів 0 годин 0 сек</div>
+    <div id="counter">0 дн 0 год 0 сек</div>
 
     <div class="controls">
-      <button id="resetBtn">Ресетнути, якщо поступила нова доза задоволення</button>
+      <button id="resetBtn">Натиснути, якщо поступила нова доза задоволення</button>
+
+      <footer>ехх, як багато часу без муркання</footer>
+
       <div>
         <label for="manualDate">Встановити дату вручну:</label>
-        <input type="datetime-local" id="manualDate">
+        <input type="datetime-local" id="manualDate" step="1">
+        <span style="display:block;margin-top:0.5rem;">будь ласка</span>
         <button id="setDateBtn">Оновити</button>
       </div>
     </div>
-
-    <footer>ехх, як багато часу без муркання</footer>
   </div>
 
   <script>
