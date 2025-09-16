@@ -113,7 +113,7 @@
       const days = Math.floor(totalSeconds / 86400);
       const hours = Math.floor((totalSeconds % 86400) / 3600);
       const seconds = totalSeconds % 60;
-      counterEl.textContent = `${days} днів ${hours} годин ${seconds} секунд`;
+      counterEl.textContent = `${days} дн ${hours} год ${seconds} сек`;
     }
 
     setInterval(updateCounter, 1000);
